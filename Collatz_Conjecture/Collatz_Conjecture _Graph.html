@@ -8,6 +8,14 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     </script>
     <style>
+        #gora{
+            height: 100px;
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 15px black solid;
+        }
         #parent {
             height: auto;
             width: auto;
@@ -23,7 +31,16 @@
         }
     </style>
 </head>
-<body><div id="parent">
+<body>
+<div id="gora"><script>document.write(`Pierwsza liczba to ${b}`)</script></div>
+<div id="parent">
+    <script>
+        document.write("<table border='1'>");
+        document.write("<tr><th>Liczba</th><th>Iteracja</th></tr>");
+        for(let i = 0; i < y; i++) {
+            document.write("<tr><td>" + xtable[i] + "</td><td>" + ytable[i] + "</td></tr>");
+        }
+    </script>
 <div id="child">
 <canvas id="myChart" style="width:100%;max-width:600px"></canvas></div>
 <script>
