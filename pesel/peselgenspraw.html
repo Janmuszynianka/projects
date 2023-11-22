@@ -118,7 +118,7 @@
             let dob = document.getElementById('dob').value;
             let gender = document.querySelector('input[name="gender"]:checked').value;
             // Display the PESEL number in the specified format
-            document.getElementById('peselDisplay').innerHTML = `${generatePesel(dob, gender)} <br> Sprawdź poprawność peselu: <a href="peselspraw.html">tutaj</a>`;
+            document.getElementById('peselDisplay').innerHTML = `${generatePesel(dob, gender)} <br> Sprawdź poprawność peselu: <a href="peselspraw.html" target="_blank">tutaj</a>`;
         }
     </script>
 </div>
