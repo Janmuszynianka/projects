@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <title>Card checker</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+        * {
+            background-color: #efefef;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            margin: 0;
+        }
+
+        .card-input-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .card-input {
+            margin: 5px;
+            text-align: center;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 4px;
+        }
+
+        .wynik {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            margin: 0;
+        }
+
+        .card-type {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="title">
+    <h1>Card checker</h1>
+    <br>
+</div>
+
+<p>Proszę wpisać numer karty:</p>
+
+<div class="card-input-container">
+    <input type="text" maxlength="4" class="card-input"/>
+    <input type="text" maxlength="4" class="card-input"/>
+    <input type="text" maxlength="4" class="card-input"/>
+    <input type="text" maxlength="4" class="card-input"/>
+</div>
+
+<div class="wynik">
+    <br>
+    <p id="result"></p>
+</div>
+
+<div class="card-type">
+    <br>
+    <p id="cardtype"></p>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = document.querySelectorAll('.card-input');
+        let cardNumber = '';
+
+        inputs.forEach(function (input, index) {
+            input.addEventListener('input', function () {
+
+                if (input.value.length === 4 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+
+                let allFilled = Array.from(inputs).every(function (input) {
+                    return input.value.length === 4;
+                });
+
+                if (allFilled) {
+                    cardNumber = Array.from(inputs).reduce(function (acc, input) {
+                        return acc + input.value;
+                    }, '');
+
+                    document.getElementById("result").innerHTML = sprawdzacz(cardNumber);
+                    cardtype(cardNumber); // Wywołanie funkcji cardtype
+                }
+            });
+        });
+    });
+
+    function sprawdzacz(cardNumberString) {
+        let array = cardNumberString.split('').map(Number);
+        let suma = 0;
+
+        for (let i = 0; i < array.length; i++) {
+            let cyfra = array[i];
+            if ((array.length - i) % 2 === 0) {
+                cyfra = cyfra * 2;
+                if (cyfra > 9) {
+                    cyfra = cyfra - 9;
+                }
+            }
+            suma += cyfra;
+        }
+        return suma % 10 === 0 ? "Podane numery karty są prawidłowe" : "Podane numery karty nie są prawidłowe";
+    }
+
+    function cardtype(cardNumberString) {
+        if (parseInt(cardNumberString[0]) === 4) {
+            document.getElementById("cardtype").innerHTML = "Podana karta to: Visa";
+        } else if (parseInt(cardNumberString[0]) === 5) {
+            document.getElementById("cardtype").innerHTML = "Podana karta to: Mastercard";
+        } else if (parseInt(cardNumberString[0]) === 3) {
+            document.getElementById("cardtype").innerHTML = "Podana karta to: American Express";
+        } else {
+            document.getElementById("cardtype").innerHTML = "Nieznany typ karty";
+        }
+    }
+
+</script>
+
+</body>
+</html>

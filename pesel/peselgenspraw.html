@@ -81,33 +81,27 @@
                 month += 80;
             }
 
-// Zapewnienie, że miesiąc jest zawsze dwucyfrowy, np. '4' zostanie przekształcone w '04'
             month = month.toString().padStart(2, '0');
 
-// Pobranie dwóch ostatnich cyfr z roku, ponieważ PESEL zawiera tylko te cyfry
             year = year.toString().substr(2, 2);
 
-// Inicjalizacja zmiennej do przechowywania czterocyfrowego numeru osobistego
             let personalId = '';
-// Wygenerowanie trzech losowych cyfr dla numeru osobistego
             for (let i = 0; i < 3; i++) {
                 personalId += Math.floor(Math.random() * 10).toString();
             }
-// Dodanie czwartej cyfry, która określa płeć: parzysta dla kobiety, nieparzysta dla mężczyzny
             let genderNum = (gender === 'male') ? Math.floor(Math.random() * 5) * 2 + 1 : Math.floor(Math.random() * 5) * 2;
             personalId += genderNum;
 
             let partialPesel = `${year}${month}${day}${personalId}`;
 
-// Wagi używane do obliczenia cyfry kontrolnej PESEL
+
             const weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
-// Obliczenie sumy iloczynów cyfr częściowego PESEL i odpowiadających im wag
+
             let sum = 0;
             for (let i = 0; i < weights.length; i++) {
                 sum += parseInt(partialPesel[i], 10) * weights[i];
             }
 
-// Obliczenie cyfry kontrolnej; jeśli suma jest liczbą dziesiętną, kontrolna cyfra to 10 minus ostatnia cyfra sumy
             sum = (10 - (sum % 10)) % 10;
 
             // Return the full PESEL
